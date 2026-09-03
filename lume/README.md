@@ -79,6 +79,20 @@ bun run src/index.ts --help   # run without linking
 bun test/smoke.ts             # exercises streaming + error paths against a fake server
 ```
 
+## Releases
+
+Tagging `lume-vX.Y.Z` triggers the `.github/workflows/build-lume.yml` workflow,
+which compiles a native binary on Linux, macOS and Windows and attaches each one
+to the GitHub Release created from the tag.
+
+```sh
+git tag lume-v0.1.0 && git push origin lume-v0.1.0
+```
+
+Assets are named `lume-linux-x64`, `lume-macos-arm64` and `lume-windows-x64.exe`.
+Bun compiles natively per platform, so the tag must be on a commit where the
+workflow exists (i.e. after the CLI is merged into the default branch).
+
 Project layout:
 
 ```
