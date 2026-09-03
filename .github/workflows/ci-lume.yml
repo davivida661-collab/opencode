@@ -1,0 +1,28 @@
+name: ci-lume
+
+on:
+  pull_request:
+    paths:
+      - "lume/**"
+      - ".github/workflows/ci-lume.yml"
+  push:
+    branches:
+      - dev
+    paths:
+      - "lume/**"
+
+jobs:
+  check:
+    name: Compile + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - name: Compile check
+        working-directory: lume
+        run: bun build src/index.ts --target bun --outfile /tmp/lume-cli.js
+      - name: Smoke tests
+        working-directory: lume
+        run: bun test/smoke.ts
